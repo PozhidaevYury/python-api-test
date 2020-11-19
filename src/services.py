@@ -23,7 +23,6 @@ class ApiService(object):
 
     def _post(self, url, body, headers=""):
         # self.headers["token"] = headers
-
         return requests \
             .post(url=read_ini()["DEFAULT"]["base_url"] + url,
                   data=json.dumps(body),
