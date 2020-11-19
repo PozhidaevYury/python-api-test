@@ -4,7 +4,16 @@ import os
 import sys
 import requests
 
+from src.logging import Logger
 from src.response import AssertableResponse
+
+step = 0
+
+
+def step_count():
+    global step
+    step = step + 1
+    return step.__str__()
 
 
 def read_ini():
@@ -36,10 +45,18 @@ class ApiService(object):
 
 
 class UserApiService(ApiService):
+    logger = Logger("test_user_registration.log").get_logger()
 
     def __init__(self):
         super().__init__()
 
     def create_user(self, user):
         # token = self.auth()
-        return AssertableResponse(self._post("/register", user))
+        response = self._post("/register", user)
+
+        self.logger.info(
+            step_count() + ")" "Request url={} body={}".format(response.request.url, response.request.body))
+        self.logger.info(
+            step_count() + ")" + "Response status={} body={}".format(response.status_code, response.text))
+
+        return AssertableResponse(response, self.logger)

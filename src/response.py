@@ -1,17 +1,14 @@
-from src.logging import Logger
-
-
 class AssertableResponse(object):
 
-    logger = Logger().get_logger()
-
-    def __init__(self, response):
-        self.logger.info("Request url={} body={}".format(response.request.url, response.request.body))
-        self.logger.info("Response status={} body={}".format(response.status_code, response.text))
-
+    def __init__(self, response, logger):
         self.response = response
+        self.logger = logger
 
     def status_code(self, code):
+        if self.response.status_code == code:
+            self.logger.info("Assert: status code should be {}".format(code))
+        else:
+            self.logger.error("Assert: status code should be {}".format(code))
         return self.response.status_code == code
 
     def field(self, name):

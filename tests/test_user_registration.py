@@ -20,11 +20,12 @@ def test_user_cannot_register_with_valid_data_twice(faker):
         "password": "12345",
         "email": faker.email()
     }
+    userApiService = UserApiService()
 
-    response = UserApiService().create_user(user)
+    response = userApiService.create_user(user)
 
     assert response.status_code(200)
 
-    response = UserApiService().create_user(user)
+    response = userApiService.create_user(user)
 
     assert response.status_code(500)
