@@ -5,9 +5,13 @@ from logging.handlers import TimedRotatingFileHandler
 
 class Logger(object):
 
-    def __init__(self, log_file):
+    def __init__(self):
         self.formatter = logging.Formatter("%(asctime)s — %(levelname)s — %(message)s")
-        self.log_file = "/Users/urij/PycharmProjects/python-api-test/log/" + log_file
+        self.log_file = "/Users/urij/PycharmProjects/python-api-test/log/"
+
+    def create_log_file(self, log_file):
+        self.log_file += log_file
+        return self
 
     def _get_console_handler(self):
         console_handler = logging.StreamHandler(sys.stdout)

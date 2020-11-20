@@ -1,4 +1,6 @@
+from src.conditions import status_code, body
 from src.services import UserApiService
+from hamcrest import has_length, greater_than
 
 
 def test_user_can_register_with_valid_data(faker):
@@ -10,8 +12,8 @@ def test_user_can_register_with_valid_data(faker):
 
     response = UserApiService().create_user(user)
 
-    assert response.status_code(200)
-    assert len(response.field("id")) > 0
+    response.should_have(status_code(200))
+    response.should_have(body("$.id", has_length(greater_than(0))))
 
 
 def test_user_cannot_register_with_valid_data_twice(faker):
@@ -23,9 +25,6 @@ def test_user_cannot_register_with_valid_data_twice(faker):
     userApiService = UserApiService()
 
     response = userApiService.create_user(user)
-
-    assert response.status_code(200)
-
+    response.should_have(status_code(200))
     response = userApiService.create_user(user)
-
-    assert response.status_code(500)
+    response.should_have(status_code(500))
