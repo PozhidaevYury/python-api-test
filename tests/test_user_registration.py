@@ -12,8 +12,8 @@ def test_user_can_register_with_valid_data(faker):
 
     response = UserApiService().create_user(user)
 
-    response.should_have(status_code(200))
-    response.should_have(body("$.id", has_length(greater_than(0))))
+    response.should_have(status_code(200)) \
+        .should_have(body("$.id", has_length(greater_than(0))))
 
 
 def test_user_cannot_register_with_valid_data_twice(faker):
