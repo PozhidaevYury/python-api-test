@@ -6,10 +6,6 @@ node {
         url: 'https://github.com/PozhidaevYury/python-api-test.git'
     }
 
-    stage("Install dependencies") {
-        sh 'pip install'
-    }
-
     stage("Test") {
         sh 'pytest tests -sv --alluredir=allure'
     }
