@@ -13,4 +13,16 @@ node {
     stage("Test") {
         sh 'pytest tests -sv --alluredir=allure'
     }
+
+    stage("Allure report") {
+        script {
+                allure([
+                    includeProperties: false,
+                    jdk: '',
+                    properties: [],
+                    reportBuildPolicy: 'ALWAYS',
+                    results: [[path: 'allure']]
+                    ])
+        }
+    }
 }
